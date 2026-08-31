@@ -10,7 +10,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "tasks", indexes = {@Index(name = "idx_tasks_status", columnList = "status"),
-@Index(name = "idx_tasks_priority", columnList = "priority")})
+@Index(name = "idx_tasks_priority", columnList = "priority"), @Index(name = "idx_task_id", columnList = "task_id")})
 public class Task {
 
     @Id
@@ -129,5 +129,5 @@ public class Task {
     public void setTaskId(String taskId) {
         this.taskId = taskId;
     }
-    
+
 }
