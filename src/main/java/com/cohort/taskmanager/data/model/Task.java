@@ -6,6 +6,7 @@ import com.cohort.taskmanager.data.enums.TaskStatus;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "tasks", indexes = {@Index(name = "idx_tasks_status", columnList = "status"),
@@ -15,6 +16,9 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "task_id", nullable = false)
+    private String taskId;
 
     @Column(name = "title", nullable = false)
     private String title;
@@ -38,10 +42,9 @@ public class Task {
 
     protected Task() {}
 
-    public Task(String title, String description, TaskStatus status, TaskPriority priority) {
+    public Task(String title, String description, TaskPriority priority){
         this.title = title;
         this.description = description;
-        this.status = status;
         this.priority = priority;
     }
 
@@ -50,6 +53,7 @@ public class Task {
         LocalDateTime now = LocalDateTime.now();
         this.createdAt = now;
         this.updatedAt = now;
+        this.taskId = UUID.randomUUID().toString();
 
         if(this.status == null) {
             this.status = TaskStatus.PENDING;
@@ -118,4 +122,12 @@ public class Task {
     }
 
 
+    public String getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
+    }
+    
 }
