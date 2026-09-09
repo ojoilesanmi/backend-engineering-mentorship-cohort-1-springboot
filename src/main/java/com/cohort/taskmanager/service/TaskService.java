@@ -34,10 +34,19 @@ public class TaskService {
         return taskMapper.toResponse(findTask(taskId));
     }
 
-    public Page<TaskResponse> getTasks(TaskStatus status, TaskPriority priority, Pageable  pageable) {
-        //TODO: implement this method
-        return null;
+    public Page<TaskResponse> getTasks(TaskStatus status, TaskPriority priority, Pageable pageable) {
+        Page<Task> tasks;
 
+        if(status != null && priority != null) {
+            tasks = taskRepository.findByStatusAndPriority(status, priority, pageable);
+        } else if( status != null) {
+            tasks = taskRepository.findByStatus(status, pageable);
+        } else if( priority != null) {
+            tasks = taskRepository.findByPriority(priority, pageable);
+        } else {
+            tasks = taskRepository.findAll(pageable);
+        }
+         return tasks.map(taskMapper::toResponse);
     }
 
     public TaskResponse updateTaskStatus(UpdateTaskRequest updateTaskRequest) {
