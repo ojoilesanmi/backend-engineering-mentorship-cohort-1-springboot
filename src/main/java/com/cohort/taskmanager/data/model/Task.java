@@ -40,12 +40,17 @@ public class Task {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "owner_id", nullable = false)
+    private User owner;
+
     protected Task() {}
 
-    public Task(String title, String description, TaskPriority priority){
+    public Task(String title, String description, TaskPriority priority, User owner){
         this.title = title;
         this.description = description;
         this.priority = priority;
+        this.owner = owner;
     }
 
     @PrePersist
