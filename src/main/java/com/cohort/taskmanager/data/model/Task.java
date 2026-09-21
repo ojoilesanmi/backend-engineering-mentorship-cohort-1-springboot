@@ -135,4 +135,8 @@ public class Task {
         this.taskId = taskId;
     }
 
+    public User getOwner() {
+        return owner;
+    }
+
 }
